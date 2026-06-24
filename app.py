@@ -39,21 +39,13 @@ try:
 except:
     model = None
 
-# ✅ LOAD DATA
+# ✅ LOAD DATA (DEPLOYMENT VERSION)
 def load_data():
     try:
-        conn = psycopg2.connect(
-            host="localhost",
-            database="airflow",
-            user="airflow",
-            password="airflow",
-            port=5432
-        )
-        df = pd.read_sql("SELECT * FROM rentals", conn)
-        conn.close()
+        df = pd.read_json("dags/processed_rentals.json")
         return df
     except Exception as e:
-        st.error(f"Database error: {e}")
+        st.error(f"Data loading failed: {e}")
         return pd.DataFrame()
 
 df = load_data()
