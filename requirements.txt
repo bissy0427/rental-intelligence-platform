@@ -4,3 +4,8 @@ pandas
 matplotlib
 scikit-learn
 joblib
+fastapi
+uvicorn
+pandas
+joblib
+scikit-learn
