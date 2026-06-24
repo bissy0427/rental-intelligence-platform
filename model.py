@@ -1,30 +1,23 @@
 import pandas as pd
 from sklearn.linear_model import LinearRegression
-import psycopg2
 import joblib
 
-# ✅ Connect to PostgreSQL
-conn = psycopg2.connect(
-    host="localhost",
-    database="airflow",
-    user="airflow",
-    password="airflow",
-    port=5432
-)
+# ✅ Sample training data (same as your app data)
+data = {
+    "bedrooms": [1, 2, 3, 1, 2, 3, 1, 2, 3, 1],
+    "price_per_room": [1500, 800, 566, 1800, 950, 666, 2100, 1100, 766, 2400],
+    "price": [1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400]
+}
 
-# ✅ Load data
-df = pd.read_sql("SELECT * FROM rentals", conn)
-conn.close()
+df = pd.DataFrame(data)
 
-# ✅ Features and target
 X = df[["bedrooms", "price_per_room"]]
 y = df["price"]
 
-# ✅ Train model
 model = LinearRegression()
 model.fit(X, y)
 
-# ✅ Save model
+# ✅ SAVE MODEL
 joblib.dump(model, "model.pkl")
 
-print("✅ Model trained and saved successfully")
+print("✅ Model created successfully")
