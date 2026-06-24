@@ -23,13 +23,17 @@ app.add_middleware(
 # ============================
 # ✅ LOAD MODEL SAFELY
 # ============================
-MODEL_PATH = "model.pkl"
 
-if os.path.exists(MODEL_PATH):
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "model.pkl")
+
+try:
     model = joblib.load(MODEL_PATH)
-else:
+    print("✅ Model loaded successfully")
+except Exception as e:
     model = None
-    print("⚠️ Model not found — prediction will not work")
+    print("❌ Model load failed:", e)
+
 
 # ============================
 # ✅ ROOT TEST
